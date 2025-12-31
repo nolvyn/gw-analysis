@@ -1,0 +1,15 @@
+name: igwn-minimal
+
+channels:
+- conda-forge
+
+dependencies:
+- h5py
+- ipykernel
+- jupyterlab
+- lalsuite
+- matplotlib
+- numpy
+- pandas
+- pycbc
+- python=3.11.14
