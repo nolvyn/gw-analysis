@@ -13,3 +13,4 @@ dependencies:
 - pandas
 - pycbc
 - python=3.11.14
+- zenodo_get
