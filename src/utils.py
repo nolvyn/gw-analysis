@@ -13,7 +13,7 @@ def init_plot():
 
 def get_parameters(event):
     if event in GWTC_4:
-        fn = f'../data/events/IGWN-GWTC4p0-0f954158d_720-{event}-combined_PEDataRelease.hdf5'
+        fn = f'../data/events/IGWN-GWTC4p0-{constants.GWTC_4_HASH}-{event}-combined_PEDataRelease.hdf5'
         aprx_list = ['C00:Mixed']
     elif event in GWTC_3:
         fn = f'../data/events/IGWN-GWTC3p0-v2-{event}_PEDataRelease_mixed_cosmo.h5'

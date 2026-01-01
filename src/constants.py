@@ -14,6 +14,8 @@ F_LOWER = 20
 DELTA_F = 1 / 4
 F_REF = 20
 
+GWTC_4_HASH = "1a206db3d_721"
+
 F_GRID = np.arange(F_LOWER, F_HIGHER, DELTA_F)
 DF_GRID = np.linspace(0, 0.15, 1000)
 

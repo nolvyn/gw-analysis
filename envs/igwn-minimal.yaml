@@ -9,6 +9,7 @@ dependencies:
 - jupyterlab
 - lalsuite
 - matplotlib
+- notebook
 - numpy
 - pandas
 - pycbc

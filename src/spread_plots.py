@@ -44,7 +44,7 @@ def collect_data(grid, x_key, x_label, x_min, x_max, suffix, waveform_data):
         plt.xlabel(x_label)
         plt.xlim(x_min, x_max)
         plt.legend()
-        plt.savefig(f"../outputs/spread/{file_base}{suffix}.png")
+        plt.savefig(f"../out/spread/{file_base}{suffix}.png")
         plt.show()
 
 def run(waveform_data):

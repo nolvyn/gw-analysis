@@ -18,7 +18,7 @@ def run(waveform_data):
     plt.xlabel('Mismatch')
     plt.ylabel('Count')
     plt.title('Mismatch Histogram')
-    plt.savefig("../outputs/mismatch/mismatch_histogram.png")
+    plt.savefig("../out/mismatch/mismatch_histogram.png")
     plt.show()
 
     utils.init_plot()
@@ -27,5 +27,5 @@ def run(waveform_data):
     plt.xlabel('Mismatch')
     plt.ylabel('Count')
     plt.title('Mismatch Histogram')
-    plt.savefig("../outputs/mismatch/mismatch_histogram_logx.png")
+    plt.savefig("../out/mismatch/mismatch_histogram_logx.png")
     plt.show()
