@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "What would you like to do?"
-echo "1) Create an exact igwn environment"
+echo "1) Create a complete igwn environment"
 echo "2) Create a minimal igwn environment"
 
 read -p "Enter choice: " choice
