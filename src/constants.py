@@ -20,13 +20,16 @@ F_GRID = np.arange(F_LOWER, F_HIGHER, DELTA_F)
 DF_GRID = np.linspace(0, 0.15, 1000)
 
 MODEL_PAIRS = [
-    ('IMRPhenomXPHM', 'SEOBNRv5HM_ROM'),
+    # ('IMRPhenomXPHM', 'SEOBNRv5HM_ROM'),
     # ('IMRPhenomD', 'SEOBNRv4HM_ROM'),
     # ('IMRPhenomD', 'SEOBNRv5HM_ROM'),
     # ('IMRPhenomXPHM', 'SEOBNRv4HM_ROM'),
     # ('IMRPhenomXPHM', 'SEOBNRv4_ROM'),
     # ('IMRPhenomXPHM', 'IMRPhenomD'),
     # ('IMRPhenomXPHM', 'IMRPhenomPv3HM'),
+    # ('IMRPhenomD', 'NRSur4d2s'),
+    # ('IMRPhenomD', 'IMRPhenomD')
+    ('IMRPhenomD', 'NRSur7dq2')
 ]
 
 PRECESSING_MODELS = [
@@ -34,7 +37,7 @@ PRECESSING_MODELS = [
 ]
 
 RUN_SPREAD_PLOTS = True
-RUN_SPREAD_PARAM_PLOTS = True
-RUN_MISMATCH_PLOTS = True
+RUN_SPREAD_PARAM_PLOTS = False
+RUN_MISMATCH_PLOTS = False
 
 USE_PRECESSING = False

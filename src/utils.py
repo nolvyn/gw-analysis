@@ -79,3 +79,9 @@ def truncate_waveform(waveforms, wfm_a, wfm_b):
     h2 = waveforms[wfm_b]
 
     return waveforms, h1, h2
+
+def get_fd_wfm():
+    return
+
+def get_td_wfm():
+    return
