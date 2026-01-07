@@ -1,12 +1,11 @@
 data/events/*
 data/models/*
-out/*
+out/mismatch/*
+out/spread/*
 
 !data/events/.gitkeep
 !data/models/.gitkeep
-!out/.gitkeep
+!out/mismatch/.gitkeep
+!out/spread/.gitkeep
 
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[codz]
-*$py.class
