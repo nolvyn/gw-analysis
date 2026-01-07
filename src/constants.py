@@ -1,4 +1,5 @@
 import numpy as np
+from pycbc.waveform import td_approximants, fd_approximants
 
 # If the number 1 is seen here, that is simply for quick testing purposes
 # 100 - 1000 typically provide good results
@@ -11,13 +12,17 @@ DPI = 100
 
 F_HIGHER = 600
 F_LOWER = 20
-DELTA_F = 1 / 4
+DELTA_F = 1 / 275
+DELTA_T = 1 / 4096
 F_REF = 20
 
 GWTC_4_HASH = "1a206db3d_721"
 
 F_GRID = np.arange(F_LOWER, F_HIGHER, DELTA_F)
 DF_GRID = np.linspace(0, 0.15, 1000)
+
+FD_MODELS = fd_approximants()
+TD_MODELS = td_approximants()
 
 MODEL_PAIRS = [
     # ('IMRPhenomXPHM', 'SEOBNRv5HM_ROM'),
@@ -28,8 +33,8 @@ MODEL_PAIRS = [
     # ('IMRPhenomXPHM', 'IMRPhenomD'),
     # ('IMRPhenomXPHM', 'IMRPhenomPv3HM'),
     # ('IMRPhenomD', 'NRSur4d2s'),
-    # ('IMRPhenomD', 'IMRPhenomD')
-    ('IMRPhenomD', 'NRSur7dq2')
+    ('IMRPhenomD', 'IMRPhenomD')
+    # ('IMRPhenomD', 'NRHybSur3dq8')
 ]
 
 PRECESSING_MODELS = [

@@ -1,4 +1,3 @@
-# Get rid of warnings
 import warnings
 warnings.filterwarnings("ignore", "Wswiglal-redir-stdio")
 warnings.filterwarnings("ignore", "pkg_resources is deprecated as an API")
@@ -11,65 +10,11 @@ sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "src")))
 os.environ['LAL_DATA_PATH'] = os.path.expanduser("~/gw-analysis/data/models")
 
 import lal
-import pycbc
-from pycbc.waveform import get_fd_waveform
 import numpy as np
 
-import constants
+import constants as C
 import gwtc
 import utils
-
-def generate_waveform(parameter, wfm_a, wfm_b):
-    mass1 = parameter['mass_1']
-    mass2 = parameter['mass_2']
-    distance = parameter['luminosity_distance']
-    inclination = parameter['iota']
-
-    spin1x = parameter['spin_1x']
-    spin1y = parameter['spin_1y']
-    spin1z = parameter['spin_1z']
-    spin2x = parameter['spin_2x']
-    spin2y = parameter['spin_2y']
-    spin2z = parameter['spin_2z']
-
-    if mass1 < mass2:
-        mass1, mass2 = mass2, mass1
-        spin1x, spin2x = spin2x, spin1x
-        spin1y, spin2y = spin2y, spin1y
-        spin1z, spin2z = spin2z, spin1z
-    
-    mass_ratio = mass2 / mass1
-    total_mass = mass1 + mass2
-    chi_eff = (mass1*spin1z + mass2*spin2z) / total_mass
-
-    waveforms = {}
-    for model in [wfm_a, wfm_b]:
-        params = {
-            'mass1': mass1,
-            'mass2': mass2,
-            'spin1z': spin1z,
-            'spin2z': spin2z,
-            'distance': distance,
-            'inclination': inclination,
-            'delta_f': constants.DELTA_F,
-            'f_lower': constants.F_LOWER,
-            'f_ref': constants.F_REF
-        }
-        
-        if constants.USE_PRECESSING and model in constants.PRECESSING_MODELS:
-            params['spin1x'] = spin1x
-            params['spin1y'] = spin1y
-            params['spin2x'] = spin2x
-            params['spin2y'] = spin2y
-
-        hp, hc = get_fd_waveform(approximant=model, **params)
-        waveforms[model] = hp
-
-    waveforms, h1, h2 = utils.truncate_waveform(waveforms, wfm_a, wfm_b)
-
-    return (waveforms, h1, h2, 
-            mass_ratio, total_mass, 
-            chi_eff)
 
 # Main Stuff
 waveform_data = {}
@@ -77,17 +22,17 @@ waveform_data = {}
 for event in gwtc.ALL_EVENTS:
     samples = utils.get_parameters(event)
 
-    for wfm_a, wfm_b in constants.MODEL_PAIRS:
+    for wfm_a, wfm_b in C.MODEL_PAIRS:
         label = f"{event} {wfm_a} vs {wfm_b}"
         waveform_data[label] = []
 
         for parameter in samples:
             (waveforms, h1, h2, 
              mass_ratio, total_mass, 
-             chi_eff) = generate_waveform(parameter, wfm_a, wfm_b)
+             chi_eff) = utils.generate_waveform(parameter, wfm_a, wfm_b)
             
             freqs = h1.sample_frequencies
-            ref_idx = np.argmin(np.abs(freqs - constants.F_REF))
+            ref_idx = np.argmin(np.abs(freqs - C.F_REF))
 
             angle = np.angle(h1[ref_idx] / h2[ref_idx])
             if np.abs(angle - np.pi) < 0.2 or np.abs(angle + np.pi) < 0.2:
@@ -121,14 +66,14 @@ for event in gwtc.ALL_EVENTS:
                 'mismatch': mismatch
             })
 
-if constants.RUN_SPREAD_PLOTS:
+if C.RUN_SPREAD_PLOTS:
     import spread_plots
     spread_plots.run(waveform_data)
 
-if constants.RUN_SPREAD_PARAM_PLOTS:
+if C.RUN_SPREAD_PARAM_PLOTS:
     import spread_param_plots
     spread_param_plots.run(waveform_data)
 
-if constants.RUN_MISMATCH_PLOTS:
+if C.RUN_MISMATCH_PLOTS:
     import mismatch_plots
     mismatch_plots.run(waveform_data)
