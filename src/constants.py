@@ -12,9 +12,10 @@ DPI = 100
 
 F_HIGHER = 600
 F_LOWER = 20
-DELTA_F = 1 / 275
-DELTA_T = 1 / 4096
 F_REF = 20
+DELTA_F = 1 / 128
+DELTA_T = 1 / 4096
+FREQ_LENGTH = int(1 / (2 * DELTA_F * DELTA_T)) + 1
 
 GWTC_4_HASH = "1a206db3d_721"
 
@@ -33,8 +34,13 @@ MODEL_PAIRS = [
     # ('IMRPhenomXPHM', 'IMRPhenomD'),
     # ('IMRPhenomXPHM', 'IMRPhenomPv3HM'),
     # ('IMRPhenomD', 'NRSur4d2s'),
-    ('IMRPhenomD', 'IMRPhenomD')
-    # ('IMRPhenomD', 'NRHybSur3dq8')
+    ('IMRPhenomD', 'IMRPhenomD'),
+    # ('IMRPhenomD', 'NRHybSur3dq8'),
+    # ('IMRPhenomD', 'NRSur7dq2'),
+    # ('IMRPhenomD', 'NRSur7dq4'),
+    # ('IMRPhenomD', 'NR_hdf5'),
+    # ('SEOBNRv4HM_ROM', 'SEOBNRv4HM'),
+    # ('EccentricFD', 'EccentricTD')
 ]
 
 PRECESSING_MODELS = [

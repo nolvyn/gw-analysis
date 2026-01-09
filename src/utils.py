@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pycbc.psd
 from pycbc.filter import match
-from pycbc.waveform import get_fd_waveform, get_fd_waveform_from_td
+from pycbc.waveform import get_fd_waveform, get_td_waveform, get_fd_waveform_from_td, td_waveform_to_fd_waveform
 import h5py
 
 import constants as C
@@ -83,13 +83,15 @@ def truncate_waveform(waveforms, wfm_a, wfm_b):
 
 def get_fd_wfm(waveforms, model, params):
     if model in C.FD_MODELS:
+    # if model in FD_MODELS:
         params['delta_f'] = C.DELTA_F
-        hp, hc = get_fd_waveform(approximant=model, **params)
-        waveforms[model] = hp
-    elif model not in C.FD_MODELS and model in C.TD_MODELS:
+        hp_fd, _ = get_fd_waveform(approximant=model, **params)
+        waveforms[model] = hp_fd
+    elif model in C.TD_MODELS:
         params['delta_t'] = C.DELTA_T
-        hp, hc = get_fd_waveform_from_td(approximant=model, **params)
-        waveforms[model] = hp
+        hp_td, _ = get_td_waveform(approximant=model, **params)
+        hp_fd = td_waveform_to_fd_waveform(hp_td, length=C.FREQ_LENGTH)
+        waveforms[model] = hp_fd
     else:
         raise ValueError(f"Model '{model}' is not available")
     return waveforms[model]
@@ -126,7 +128,6 @@ def generate_waveform(parameter, wfm_a, wfm_b):
             'spin2z': spin2z,
             'distance': distance,
             'inclination': inclination,
-            'delta_f': C.DELTA_F,
             'f_lower': C.F_LOWER,
             'f_ref': C.F_REF
         }
