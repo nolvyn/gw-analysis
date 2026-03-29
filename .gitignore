@@ -9,3 +9,4 @@ out/spread/*
 !out/spread/.gitkeep
 
 __pycache__/
+.venv/
