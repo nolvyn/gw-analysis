@@ -28,8 +28,9 @@ for event in gwtc.ALL_EVENTS:
 
         for parameter in samples:
             (waveforms, h1, h2, 
-             mass_ratio, total_mass, 
-             chi_eff) = utils.generate_waveform(parameter, wfm_a, wfm_b)
+            mass_ratio, total_mass, 
+            spin1z, spin2z, chi_eff,
+            distance, inclination) = utils.generate_waveform(parameter, wfm_a, wfm_b)
             
             freqs = h1.sample_frequencies
             ref_idx = np.argmin(np.abs(freqs - C.F_REF))
@@ -54,6 +55,10 @@ for event in gwtc.ALL_EVENTS:
             freqs_dimless = freqs * M_sec
 
             waveform_data[label].append({
+                'spin1z': spin1z,
+                'spin2z': spin2z,
+                'distance': distance,
+                'inclination': inclination,
                 'freqs': freqs,
                 'amp': np.abs(h1),
                 'd_A': d_A,
@@ -77,3 +82,7 @@ if C.RUN_SPREAD_PARAM_PLOTS:
 if C.RUN_MISMATCH_PLOTS:
     import mismatch_plots
     mismatch_plots.run(waveform_data)
+
+if C.RUN_QUANT_PLOTS:
+    import quant_plots
+    quant_plots.run(waveform_data)

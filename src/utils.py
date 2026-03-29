@@ -83,7 +83,6 @@ def truncate_waveform(waveforms, wfm_a, wfm_b):
 
 def get_fd_wfm(waveforms, model, params):
     if model in C.FD_MODELS:
-    # if model in FD_MODELS:
         params['delta_f'] = C.DELTA_F
         hp_fd, _ = get_fd_waveform(approximant=model, **params)
         waveforms[model] = hp_fd
@@ -144,4 +143,5 @@ def generate_waveform(parameter, wfm_a, wfm_b):
 
     return (waveforms, h1, h2, 
             mass_ratio, total_mass, 
-            chi_eff)
+            spin1z, spin2z, chi_eff,
+            distance, inclination)

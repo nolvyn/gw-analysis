@@ -3,7 +3,7 @@ from pycbc.waveform import td_approximants, fd_approximants
 
 # If the number 1 is seen here, that is simply for quick testing purposes
 # 100 - 1000 typically provide good results
-DRAW_QUANTITY = 1
+DRAW_QUANTITY = 100
 
 THRESH_NUM = 0.001
 ALPHA = 0.3
@@ -13,7 +13,8 @@ DPI = 100
 F_HIGHER = 600
 F_LOWER = 20
 F_REF = 20
-DELTA_F = 1 / 128
+DELTA_F = 1/4
+# DELTA_F = 1 / 128
 DELTA_T = 1 / 4096
 FREQ_LENGTH = int(1 / (2 * DELTA_F * DELTA_T)) + 1
 
@@ -26,7 +27,7 @@ FD_MODELS = fd_approximants()
 TD_MODELS = td_approximants()
 
 MODEL_PAIRS = [
-    # ('IMRPhenomXPHM', 'SEOBNRv5HM_ROM'),
+    ('IMRPhenomXPHM', 'SEOBNRv5HM_ROM'),
     # ('IMRPhenomD', 'SEOBNRv4HM_ROM'),
     # ('IMRPhenomD', 'SEOBNRv5HM_ROM'),
     # ('IMRPhenomXPHM', 'SEOBNRv4HM_ROM'),
@@ -34,7 +35,7 @@ MODEL_PAIRS = [
     # ('IMRPhenomXPHM', 'IMRPhenomD'),
     # ('IMRPhenomXPHM', 'IMRPhenomPv3HM'),
     # ('IMRPhenomD', 'NRSur4d2s'),
-    ('IMRPhenomD', 'IMRPhenomD'),
+    # ('IMRPhenomD', 'IMRPhenomD'),
     # ('IMRPhenomD', 'NRHybSur3dq8'),
     # ('IMRPhenomD', 'NRSur7dq2'),
     # ('IMRPhenomD', 'NRSur7dq4'),
@@ -48,7 +49,8 @@ PRECESSING_MODELS = [
 ]
 
 RUN_SPREAD_PLOTS = True
-RUN_SPREAD_PARAM_PLOTS = False
+RUN_SPREAD_PARAM_PLOTS = True
 RUN_MISMATCH_PLOTS = False
+RUN_QUANT_PLOTS = False
 
 USE_PRECESSING = False
