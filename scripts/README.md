@@ -1,7 +1,9 @@
 # gw-analysis
 
-Event Setup:
-Due to rate limiting from Zenodo, the event setup script may need to be run multiple times.
+Due to rate limiting from Zenodo, these scripts take quite a long time and may need to be run multiple times.
 
-Model Setup:
-The files from https://git.ligo.org/waveforms/software/lalsuite-waveform-data may need to be downloaded manually instead of git cloned.
+Alternatively, the files for models used in this analysis can be found here:
+
+https://git.ligo.org/lscsoft/lalsuite-extra
+
+https://git.ligo.org/waveforms/software/lalsuite-waveform-data
