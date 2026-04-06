@@ -2,11 +2,13 @@ data/events/*
 data/models/*
 out/mismatch/*
 out/spread/*
+out/vary/*
 
 !data/events/.gitkeep
 !data/models/.gitkeep
 !out/mismatch/.gitkeep
 !out/spread/.gitkeep
+!out/vary/.gitkeep
 
 __pycache__/
 .venv/
