@@ -216,7 +216,11 @@ def collect_medians(events):
     all_mass2 = []
     all_total_mass = []
     all_mass_ratio = []
+    all_spin1x = []
+    all_spin1y = []
     all_spin1z = []
+    all_spin2x = []
+    all_spin2y = []
     all_spin2z = []
     all_distance = []
     all_inclination = []
@@ -228,9 +232,17 @@ def collect_medians(events):
             mass2 = parameter["mass_2"]
             if mass1 < mass2:
                 mass1, mass2 = mass2, mass1
+                spin1x = parameter["spin_2x"]
+                spin2x = parameter["spin_1x"]
+                spin1y = parameter["spin_2y"]
+                spin2y = parameter["spin_1y"]
                 spin1z = parameter["spin_2z"]
                 spin2z = parameter["spin_1z"]
             else:
+                spin1x = parameter["spin_1x"]
+                spin2x = parameter["spin_2x"]
+                spin1y = parameter["spin_1y"]
+                spin2y = parameter["spin_2y"]
                 spin1z = parameter["spin_1z"]
                 spin2z = parameter["spin_2z"]
 
@@ -238,7 +250,11 @@ def collect_medians(events):
             all_mass2.append(mass2)
             all_total_mass.append(mass1 + mass2)
             all_mass_ratio.append(mass2 / mass1)
+            all_spin1z.append(spin1x)
+            all_spin1z.append(spin1y)
             all_spin1z.append(spin1z)
+            all_spin2z.append(spin2x)
+            all_spin2z.append(spin2y)
             all_spin2z.append(spin2z)
             all_distance.append(parameter["luminosity_distance"])
             all_inclination.append(parameter["iota"])
@@ -248,7 +264,11 @@ def collect_medians(events):
         "mass2": np.median(all_mass2),
         "total_mass": np.median(all_total_mass),
         "mass_ratio": np.median(all_mass_ratio),
+        "spin1x": np.median(all_spin1x),
+        "spin1y": np.median(all_spin1y),
         "spin1z": np.median(all_spin1z),
+        "spin2x": np.median(all_spin2x),
+        "spin2y": np.median(all_spin2y),
         "spin2z": np.median(all_spin2z),
         "distance": np.median(all_distance),
         "inclination": np.median(all_inclination)
