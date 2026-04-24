@@ -10,7 +10,7 @@ out/oat/*
 !out/mismatch/.gitkeep
 !out/spread/.gitkeep
 !out/vary/.gitkeep
-!out/oat.gitkeep
+!out/oat/.gitkeep
 
 __pycache__/
 .venv/
