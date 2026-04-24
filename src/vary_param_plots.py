@@ -11,36 +11,58 @@ PLOT_CONFIG = [
 ]
 
 
-def vary_parameter(sweep_values, sweep_name, sweep_label, medians, wfm_a, wfm_b):
+def vary_parameter(sweep_values, sweep_name, sweep_label, percentiles, wfm_a, wfm_b):
     results = []
 
     for val in sweep_values:
         if sweep_name == "total_mass":
             total_mass = val
-            mass_ratio = medians["mass_ratio"]
+            mass_ratio = percentiles["mass_ratio_p50"]
             mass1 = total_mass / (1.0 + mass_ratio)
             mass2 = total_mass * mass_ratio / (1.0 + mass_ratio)
-            spin1z = medians["spin1z"]
-            spin2z = medians["spin2z"]
+            spin1z = percentiles["spin1z_p50"]
+            spin2z = percentiles["spin2z_p50"]
         elif sweep_name == "mass_ratio":
-            total_mass = medians["total_mass"]
+            total_mass = percentiles["total_mass_p50"]
             mass_ratio = val
             mass1 = total_mass / (1.0 + mass_ratio)
             mass2 = total_mass * mass_ratio / (1.0 + mass_ratio)
-            spin1z = medians["spin1z"]
-            spin2z = medians["spin2z"]
+            spin1z = percentiles["spin1z_p50"]
+            spin2z = percentiles["spin2z_p50"]
         elif sweep_name == "chi_eff":
-            mass1 = medians["mass1"]
-            mass2 = medians["mass2"]
+            mass1 = percentiles["mass1_p50"]
+            mass2 = percentiles["mass2_p50"]
             total_mass = mass1 + mass2
             spin1z = val
             spin2z = val
+        elif sweep_name == "distance":
+            mass1 = percentiles["mass1_p50"]
+            mass2 = percentiles["mass2_p50"]
+            total_mass = mass1 + mass2
+            spin1z = percentiles["spin1z_p50"]
+            spin2z = percentiles["spin2z_p50"]
+        elif sweep_name == "inclination":
+            mass1 = percentiles["mass1_p50"]
+            mass2 = percentiles["mass2_p50"]
+            total_mass = mass1 + mass2
+            spin1z = percentiles["spin1z_p50"]
+            spin2z = percentiles["spin2z_p50"]
+
+        if sweep_name == "distance":
+            distance = val
+        else:
+            distance = percentiles["distance_p50"]
+
+        if sweep_name == "inclination":
+            inclination = val
+        else:
+            inclination = percentiles["inclination_p50"]
 
         parameter = {
             "mass_1": mass1,
             "mass_2": mass2,
-            "luminosity_distance": medians["distance"],
-            "iota": medians["inclination"],
+            "luminosity_distance": distance,
+            "iota": inclination,
             "spin_1x": 0,
             "spin_1y": 0,
             "spin_1z": spin1z,
@@ -76,7 +98,7 @@ def vary_parameter(sweep_values, sweep_name, sweep_label, medians, wfm_a, wfm_b)
         for val, characteristics in results:
             freqs = characteristics["freqs"]
             y_data = characteristics[data_key]
-            plt.plot(freqs, y_data, label=val)
+            plt.plot(freqs, y_data, label=f"{val:.2f}")
 
         plt.title(f"{title} by varying {sweep_label}")
         plt.ylabel(y_label)
@@ -87,13 +109,13 @@ def vary_parameter(sweep_values, sweep_name, sweep_label, medians, wfm_a, wfm_b)
         plt.show()
 
 
-def run(medians):
+def run(percentiles):
     for wfm_a, wfm_b in C.MODEL_PAIRS:
         vary_parameter(
             C.VARY_TOTAL_MASS,
             "total_mass",
             "Total Mass",
-            medians,
+            percentiles,
             wfm_a,
             wfm_b,
         )
@@ -102,7 +124,7 @@ def run(medians):
             C.VARY_MASS_RATIO,
             "mass_ratio",
             "Mass Ratio",
-            medians,
+            percentiles,
             wfm_a,
             wfm_b,
         )
@@ -111,7 +133,25 @@ def run(medians):
             C.VARY_CHI_EFF,
             "chi_eff",
             "Effective Spin",
-            medians,
+            percentiles,
+            wfm_a,
+            wfm_b,
+        )
+
+        vary_parameter(
+            C.VARY_DISTANCE,
+            "distance",
+            "Luminosity Distance",
+            percentiles,
+            wfm_a,
+            wfm_b,
+        )
+
+        vary_parameter(
+            C.VARY_INCLINATION,
+            "inclination",
+            "Inclination Angle",
+            percentiles,
             wfm_a,
             wfm_b,
         )

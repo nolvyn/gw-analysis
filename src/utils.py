@@ -211,7 +211,7 @@ def compute_characteristics(h1, h2, waveforms, wfm_a, total_mass):
     }
 
 
-def collect_medians(events):
+def collect_percentiles(events):
     all_mass1 = []
     all_mass2 = []
     all_total_mass = []
@@ -250,28 +250,35 @@ def collect_medians(events):
             all_mass2.append(mass2)
             all_total_mass.append(mass1 + mass2)
             all_mass_ratio.append(mass2 / mass1)
-            all_spin1z.append(spin1x)
-            all_spin1z.append(spin1y)
+            all_spin1x.append(spin1x)
+            all_spin1y.append(spin1y)
             all_spin1z.append(spin1z)
-            all_spin2z.append(spin2x)
-            all_spin2z.append(spin2y)
+            all_spin2x.append(spin2x)
+            all_spin2y.append(spin2y)
             all_spin2z.append(spin2z)
             all_distance.append(parameter["luminosity_distance"])
             all_inclination.append(parameter["iota"])
 
-    medians = {
-        "mass1": np.median(all_mass1),
-        "mass2": np.median(all_mass2),
-        "total_mass": np.median(all_total_mass),
-        "mass_ratio": np.median(all_mass_ratio),
-        "spin1x": np.median(all_spin1x),
-        "spin1y": np.median(all_spin1y),
-        "spin1z": np.median(all_spin1z),
-        "spin2x": np.median(all_spin2x),
-        "spin2y": np.median(all_spin2y),
-        "spin2z": np.median(all_spin2z),
-        "distance": np.median(all_distance),
-        "inclination": np.median(all_inclination)
+    all_params = {
+        "mass1": all_mass1,
+        "mass2": all_mass2,
+        "total_mass": all_total_mass,
+        "mass_ratio": all_mass_ratio,
+        "spin1x": all_spin1x,
+        "spin1y": all_spin1y,
+        "spin1z": all_spin1z,
+        "spin2x": all_spin2x,
+        "spin2y": all_spin2y,
+        "spin2z": all_spin2z,
+        "distance": all_distance,
+        "inclination": all_inclination,
     }
 
-    return medians
+    percentiles = {}
+    for name, values in all_params.items():
+        p16, p50, p84 = np.percentile(values, [16, 50, 84])
+        percentiles[f"{name}_p16"] = p16
+        percentiles[f"{name}_p50"] = p50
+        percentiles[f"{name}_p84"] = p84
+
+    return percentiles

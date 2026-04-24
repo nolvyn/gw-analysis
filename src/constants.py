@@ -4,6 +4,7 @@ from pycbc.waveform import td_approximants, fd_approximants
 # If the number 1 is seen here, that is simply for quick testing purposes
 # 100 - 1000 typically provide good results
 DRAW_QUANTITY = 1
+OAT_RESOLUTION = 20
 
 THRESH_NUM = 0.0001
 ALPHA = 0.3
@@ -26,6 +27,20 @@ DF_GRID = np.linspace(0, 0.15, 1000)
 VARY_TOTAL_MASS = [10, 20, 40, 60, 80, 100, 150, 200]
 VARY_MASS_RATIO = [0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 0.9, 1.0]
 VARY_CHI_EFF = [-0.8, -0.5, -0.3, -0.1, 0.0, 0.1, 0.3, 0.5, 0.8]
+VARY_DISTANCE = [100, 250, 500, 1000, 1500, 2000, 2500, 3500, 5000]
+VARY_INCLINATION = [
+    0,
+    (1 * np.pi) / 16,
+    np.pi / 8,
+    (2 * np.pi) / 8,
+    (3 * np.pi) / 8,
+    np.pi / 2,
+    (5 * np.pi) / 8,
+    (6 * np.pi) / 8,
+    (7 * np.pi) / 8,
+    (15 * np.pi) / 16,
+    np.pi,
+]
 
 FD_MODELS = fd_approximants()
 TD_MODELS = td_approximants()
@@ -51,9 +66,10 @@ MODEL_PAIRS = [
 
 PRECESSING_MODELS = ["IMRPhenomXPHM", "IMRPhenomPv3HM"]
 
-RUN_SPREAD_PLOTS = True
-RUN_SPREAD_PARAM_PLOTS = True
-RUN_MISMATCH_PLOTS = True
-RUN_VARY_PLOTS = True
+RUN_SPREAD_PLOTS = False
+RUN_SPREAD_PARAM_PLOTS = False
+RUN_MISMATCH_PLOTS = False
+RUN_VARY_PLOTS = False
+RUN_OAT_PLOTS = True
 
 USE_PRECESSING = False

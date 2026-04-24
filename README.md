@@ -129,4 +129,4 @@ Output plots go to `out/spread/`, `out/vary/`, and `out/mismatch/` depending on 
 
 **`LAL_DATA_PATH/XLAL` Errors**: Make sure the waveform model files are actually in `data/models/` and that you are running this code from either the accompanied jupyter notebook, or using `uv run` from the `src` directory.
 
-**Zenodo downloads keep failing**: Keep running the scripts as Zenodo will not redownload what it has already downloaded, or obtain the files manually from the links above.
+**Zenodo downloads keep failing**: Keep running the scripts as Zenodo will not redownload what it has already downloaded. Or obtain the files manually from the links above.

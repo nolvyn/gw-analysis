@@ -80,5 +80,11 @@ if C.RUN_MISMATCH_PLOTS:
 if C.RUN_VARY_PLOTS:
     import vary_param_plots
 
-    medians = utils.collect_medians(gwtc.ALL_EVENTS)
-    vary_param_plots.run(medians)
+    percentiles = utils.collect_percentiles(gwtc.ALL_EVENTS)
+    vary_param_plots.run(percentiles)
+
+if C.RUN_OAT_PLOTS:
+    import oat_plots
+
+    percentiles = utils.collect_percentiles(gwtc.ALL_EVENTS)
+    oat_plots.run(percentiles)
