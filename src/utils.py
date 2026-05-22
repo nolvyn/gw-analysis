@@ -30,8 +30,8 @@ def get_parameters(event):
         fn = f"../data/events/IGWN-GWTC2p1-v2-{event}_PEDataRelease_mixed_cosmo.h5"
         aprx_list = ["C01:Mixed"]
 
-    data = h5py.File(fn, "r")
-    return data[aprx_list[0]]["posterior_samples"][: C.DRAW_QUANTITY]
+    with h5py.File(fn, "r") as data:
+        return data[aprx_list[0]]["posterior_samples"][: C.DRAW_QUANTITY]
 
 
 psd_cache = {}

@@ -167,6 +167,38 @@ def run_oat_sweep(sweep_values, sweep_name, sweep_label, percentiles, wfm_a, wfm
         plt.savefig(f"../out/oat/{pair_tag}_oat_{sweep_name}_{data_key}_main.png")
         plt.show()
 
+    for data_key, y_label, title in PLOT_CONFIG:
+        utils.init_plot()
+
+        for result in all_sweep_results:
+            sweep_val = result["sweep_val"]
+
+            all_y = []
+            for oat_name, oat_label in oat_params:
+                for curve in result["per_param_curves"][oat_name]:
+                    curve_freqs_dimless = np.array(curve["freqs_dimless"])
+                    curve_y = np.array(curve[data_key])
+                    y_interp = np.interp(
+                        C.DF_GRID, curve_freqs_dimless, curve_y, left=np.nan, right=np.nan
+                    )
+                    all_y.append(y_interp)
+
+            all_y = np.stack(all_y, axis=0)
+            env_min = np.nanmin(all_y, axis=0)
+            env_max = np.nanmax(all_y, axis=0)
+
+            plt.fill_between(
+                C.DF_GRID, env_min, env_max, alpha=C.ALPHA, label=f"{sweep_val}"
+            )
+
+        plt.title(f"{title} OAT by varying {sweep_label}")
+        plt.ylabel(y_label)
+        plt.xlabel("Dimensionless Frequency")
+        plt.xlim(C.DF_GRID[0], C.DF_GRID[-1])
+        plt.legend()
+        plt.savefig(f"../out/oat/{pair_tag}_oat_{sweep_name}_{data_key}_main_df.png")
+        plt.show()
+
     for result in all_sweep_results:
         sweep_val = result["sweep_val"]
 
@@ -202,6 +234,44 @@ def run_oat_sweep(sweep_values, sweep_name, sweep_label, percentiles, wfm_a, wfm
             plt.legend()
             plt.savefig(
                 f"../out/oat/{pair_tag}_{sweep_name}_{data_key}_{sweep_val}.png"
+            )
+            plt.show()
+
+    for result in all_sweep_results:
+        sweep_val = result["sweep_val"]
+
+        for data_key, y_label, title in PLOT_CONFIG:
+            utils.init_plot()
+
+            for oat_name, oat_label in oat_params:
+                param_y = []
+                for curve in result["per_param_curves"][oat_name]:
+                    curve_freqs_dimless = np.array(curve["freqs_dimless"])
+                    curve_y = np.array(curve[data_key])
+                    y_interp = np.interp(
+                        C.DF_GRID, curve_freqs_dimless, curve_y, left=np.nan, right=np.nan
+                    )
+                    param_y.append(y_interp)
+
+                param_y_stacked = np.stack(param_y, axis=0)
+                param_min = np.nanmin(param_y_stacked, axis=0)
+                param_max = np.nanmax(param_y_stacked, axis=0)
+
+                plt.fill_between(
+                    C.DF_GRID,
+                    param_min,
+                    param_max,
+                    alpha=C.ALPHA,
+                    label=oat_label,
+                )
+
+            plt.title(f"{title} OAT at {sweep_label} = {sweep_val}")
+            plt.ylabel(y_label)
+            plt.xlabel("Dimensionless Frequency")
+            plt.xlim(C.DF_GRID[0], C.DF_GRID[-1])
+            plt.legend()
+            plt.savefig(
+                f"../out/oat/{pair_tag}_{sweep_name}_{data_key}_{sweep_val}_df.png"
             )
             plt.show()
 

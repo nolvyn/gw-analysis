@@ -5,21 +5,9 @@ import constants as C
 import utils
 
 PLOT_CONFIG = [
-    (
-        "d_A",
-        "$dA$",
-        "Amplitude Difference",
-    ),
-    (
-        "d_phi",
-        "$d\\phi$",
-        "Phase Difference",
-    ),
-    (
-        "d_phi_R",
-        "$d\\phi_R$",
-        "Residual Phase Difference",
-    ),
+    ("d_A", "$dA$", "Amplitude Difference"),
+    ("d_phi", "$d\\phi$", "Phase Difference"),
+    ("d_phi_R", "$d\\phi_R$", "Residual Phase Difference"),
 ]
 
 BINS_BY_PARAM = {
@@ -40,6 +28,13 @@ BINS_BY_PARAM = {
         (-0.25, 0.0, "-0.25-0", "red"),
         (0.0, 0.25, "0-0.25", "green"),
         (0.25, 1.0, ">0.25", "yellow"),
+    ],
+    "inclination": [
+        (0, np.pi / 4, "$0$-$\\pi/4$", "blue"),
+        (np.pi / 4, 7 * np.pi / 16, "$\\pi/4$-$7\\pi/16$", "red"),
+        (7 * np.pi / 16, 9 * np.pi / 16, "$7\\pi/16$-$9\\pi/16$", "purple"),
+        (9 * np.pi / 16, 3 * np.pi / 4, "$9\\pi/16$-$3\\pi/4$", "green"),
+        (3 * np.pi / 4, np.pi, "$3\\pi/4$-$\\pi$", "yellow"),
     ],
 }
 
@@ -86,6 +81,8 @@ def collect_param_data(
             title_suffix = " by Total Mass"
         elif param_key == "chi_eff":
             title_suffix = " by Effective Spin"
+        elif param_key == "inclination":
+            title_suffix = " by Inclination Angle"
 
         plt.title(title + title_suffix)
         plt.ylabel(y_label)
@@ -137,6 +134,19 @@ def run(waveform_data):
     )
 
     collect_param_data(
+        grid=C.F_GRID,
+        x_key="freqs",
+        x_label="Frequency (Hz)",
+        x_min=C.F_LOWER,
+        x_max=C.F_HIGHER,
+        suffix="",
+        waveform_data=waveform_data,
+        param_key="inclination",
+        bins=BINS_BY_PARAM["inclination"],
+        file_tag="spread_bins_inclination",
+    )
+
+    collect_param_data(
         grid=C.DF_GRID,
         x_key="freqs_dimless",
         x_label="Dimensionless Frequency",
@@ -173,4 +183,17 @@ def run(waveform_data):
         param_key="chi_eff",
         bins=BINS_BY_PARAM["chi_eff"],
         file_tag="spread_bins_df_chieff",
+    )
+
+    collect_param_data(
+        grid=C.DF_GRID,
+        x_key="freqs_dimless",
+        x_label="Dimensionless Frequency",
+        x_min=C.DF_GRID[0],
+        x_max=C.DF_GRID[-1],
+        suffix="_df",
+        waveform_data=waveform_data,
+        param_key="inclination",
+        bins=BINS_BY_PARAM["inclination"],
+        file_tag="spread_bins_df_inclination",
     )

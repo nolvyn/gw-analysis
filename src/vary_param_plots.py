@@ -108,6 +108,22 @@ def vary_parameter(sweep_values, sweep_name, sweep_label, percentiles, wfm_a, wf
         plt.savefig(f"../out/vary/{pair_tag}_vary_{sweep_name}_{data_key}.png")
         plt.show()
 
+    for data_key, y_label, title in PLOT_CONFIG:
+        utils.init_plot()
+
+        for val, characteristics in results:
+            freqs_dimless = characteristics["freqs_dimless"]
+            y_data = characteristics[data_key]
+            plt.plot(freqs_dimless, y_data, label=f"{val:.2f}")
+
+        plt.title(f"{title} by varying {sweep_label}")
+        plt.ylabel(y_label)
+        plt.xlabel("Dimensionless Frequency")
+        plt.xlim(C.DF_GRID[0], C.DF_GRID[-1])
+        plt.legend()
+        plt.savefig(f"../out/vary/{pair_tag}_vary_{sweep_name}_{data_key}_df.png")
+        plt.show()
+
 
 def run(percentiles):
     for wfm_a, wfm_b in C.MODEL_PAIRS:
