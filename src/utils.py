@@ -51,7 +51,7 @@ def calculate_amp(h1, h2):
 
 
 def calculate_phase(h1, h2):
-    return np.unwrap(np.angle(h1)) - np.unwrap(np.angle(h2))
+    return np.unwrap(np.angle(h1 * np.conj(h2)))
 
 
 def calculate_r_phase(d_phi, h1):
@@ -181,17 +181,11 @@ def compute_characteristics(h1, h2, waveforms, wfm_a, total_mass):
     freqs = h1.sample_frequencies
     ref_idx = np.argmin(np.abs(freqs - C.F_REF))
 
-    angle = np.angle(h1[ref_idx] / h2[ref_idx])
-    if np.abs(angle - np.pi) < 0.2 or np.abs(angle + np.pi) < 0.2:
-        h1 *= -1
-        waveforms[wfm_a] *= -1
-
     d_A = calculate_amp(h1, h2)
 
     d_phi = calculate_phase(h1, h2)
-    d_phi_unwrapped = np.unwrap(d_phi)
-    offset = d_phi_unwrapped[ref_idx]
-    d_phi_aligned = d_phi_unwrapped - offset
+    offset = d_phi[ref_idx]
+    d_phi_aligned = d_phi - offset
 
     d_phi_R = calculate_r_phase(d_phi_aligned, h1)
 

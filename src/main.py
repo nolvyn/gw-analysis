@@ -13,7 +13,7 @@ warnings.filterwarnings("ignore", "pkg_resources is deprecated as an API")
 sys.path.append(os.path.abspath(os.path.join(os.getcwd(), "src")))
 
 # Set up proper LAL Data Path (Needed for accessing SEOBNR and NR files)
-os.environ["LAL_DATA_PATH"] = os.path.expanduser("~/gw-analysis/data/models")
+os.environ["LAL_DATA_PATH"] = os.path.expanduser("~/projects/gw-analysis/data/models")
 
 # Main Stuff
 waveform_data = {}
