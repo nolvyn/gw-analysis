@@ -3,7 +3,7 @@ from pycbc.waveform import td_approximants, fd_approximants
 
 # If the number 1 is seen here, that is simply for quick testing purposes
 # 100 - 1000 typically provide good results
-DRAW_QUANTITY = 10
+DRAW_QUANTITY = 100
 OAT_RESOLUTION = 20
 
 THRESH_NUM = 0.0001

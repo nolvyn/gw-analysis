@@ -2,17 +2,7 @@
 name = "gw-analysis"
 version = "0.1.0"
 requires-python = ">=3.11,<3.14"
-dependencies = [
-    "h5py",
-    "lalsuite",
-    "matplotlib",
-    "numpy",
-    "pycbc",
-]
+dependencies = ["h5py", "joblib", "lalsuite", "matplotlib", "numpy", "pycbc"]
 
 [dependency-groups]
-dev = [
-    "ipykernel",
-    "jupyter",
-    "zenodo-get",
-]
+dev = ["ipykernel", "jupyter", "zenodo-get"]
